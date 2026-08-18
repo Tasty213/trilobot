@@ -10,5 +10,5 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libgpiod-dev \
     i2c-tools
 
-ADD trilobot-python trilobot-python
+COPY ./ /
 RUN pip install -e ./trilobot-python
