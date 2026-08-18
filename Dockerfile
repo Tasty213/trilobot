@@ -11,4 +11,4 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     i2c-tools
 
 ADD trilobot-python trilobot-python
-RUN pip install ./trilobot-python
+RUN pip install -e ./trilobot-python
