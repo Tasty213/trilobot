@@ -12,4 +12,4 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 COPY ./ /
 RUN pip install -e ./trilobot-python
-CMD python3 /trilobot-python/examples/flash_underlights.py
+CMD python3 /driver.py
