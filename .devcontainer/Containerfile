@@ -1,5 +1,5 @@
 # Use the official Python image matching the current Raspberry Pi OS (Bookworm)
-FROM python:3.11-slim-bookworm
+FROM ubuntu:26.04
 
 # Install system dependencies often needed for Pi development (GPIO, I2C, Build tools)
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -7,6 +7,20 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     curl \
     python3-dev \
+    pip \
     libgpiod-dev \
     i2c-tools \
-    ssh
+    ssh \
+    sudo \
+    software-properties-common
+
+RUN add-apt-repository universe --yes
+
+ADD ros_setup.sh ros_setup.sh
+
+RUN ./ros_setup.sh
+
+RUN apt update
+RUN apt install ros-dev-tools --yes
+
+RUN apt install ros-lyrical-ros-base --yes

@@ -12,5 +12,5 @@
             ]
         }
     },
-    "postCreateCommand": "pip install -e trilobot-python"
+    "postCreateCommand": "source /opt/ros/lyrical/setup.bash && pip install -e trilobot-python"
 }
