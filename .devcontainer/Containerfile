@@ -8,4 +8,5 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     python3-dev \
     libgpiod-dev \
-    i2c-tools
+    i2c-tools \
+    ssh

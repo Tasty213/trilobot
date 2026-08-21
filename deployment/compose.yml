@@ -1,0 +1,15 @@
+services:
+  trilobot-driver:
+    image: ghcr.io/tasty213/trilobot:main
+    restart: always
+    privileged: true
+    environment:
+      - LG_WD=/tmp
+      - RPI_LGPIO_REVISION=0x00d04170
+      - RPI_LGPIO_CHIP=4
+      - LG_CHIP=4
+    devices:
+      - /dev/gpiochip0:/dev/gpiochip0
+      - /dev/gpiochip0:/dev/gpiochip4
+      - /dev/i2c-1:/dev/i2c-1
+    network_mode: "host"
