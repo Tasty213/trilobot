@@ -1,3 +1,25 @@
 {
-    "python-envs.defaultEnvManager": "ms-python.python:system"
+    "python-envs.defaultEnvManager": "ms-python.python:system",
+    "python-envs.pythonProjects": [
+        {
+            "path": "src/trilobot_interfaces/src",
+            "envManager": "ms-python.python:system",
+            "packageManager": "ms-python.python:pip"
+        }
+    ],
+    "python.analysis.extraPaths": [
+        "/workspaces/trilobot/install/trilobot_interfaces/lib/python3.14/site-packages",
+        "/workspaces/trilobot/install/trilobot_core/lib/python3.14/site-packages",
+        "/workspaces/trilobot/install/lights/lib/python3.14/site-packages",
+        "/opt/ros/lyrical/lib/python3.14/site-packages",
+        "/workspaces/trilobot/src/trilobot_core/resource/trilobot_python"
+    ],
+    "python.autoComplete.extraPaths": [
+        "/workspaces/trilobot/install/trilobot_interfaces/lib/python3.14/site-packages",
+        "/workspaces/trilobot/install/trilobot_core/lib/python3.14/site-packages",
+        "/workspaces/trilobot/install/lights/lib/python3.14/site-packages",
+        "/opt/ros/lyrical/lib/python3.14/site-packages",
+        "/workspaces/trilobot/src/trilobot_core/resource/trilobot_python"
+    ],
+    "python.analysis.languageServerMode": "default"
 }

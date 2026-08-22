@@ -1,34 +1,39 @@
-import time
-
+from trilobot_interfaces.msg import Colour
+from trilobot_interfaces.srv import SetUnderlight
 from trilobot import Trilobot
 
-"""
-This example will demonstrate the RGB underlights of Trilobot,
-by making them flash in a red, green and blue sequence.
-"""
-print("Trilobot Example: Flash Underlights\n")
+import rclpy
+from rclpy.executors import ExternalShutdownException
+from rclpy.node import Node
+
+class DriverService(Node):
+
+    def __init__(self):
+        super().__init__('driver_service')
+        self.logger = self.get_logger()
+        self.logger.info("Preparing trilobot")
+        self.tbot = Trilobot()
+        self.srv = self.create_service(SetUnderlight, 'set_underlight', self.set_underlight_callback)
+        self.logger.info(("Trilobot driver ready"))
+
+    def set_underlight_callback(self, request: Colour, response: bool):
+        self.logger.info("Recieved set colour request")
+        colour = (request.red, request.green, request.blue)
+        self.tbot.fill_underlighting(colour)
+        response = True
+        self.logger.info("Executed set colour request")
+        return response
 
 
-RED = (255, 0, 0)
-GREEN = (0, 255, 0)
-BLUE = (0, 0, 255)
+def main():
+    try:
+        with rclpy.init():
+            driver_service = DriverService()
 
-INTERVAL = 0.3  # Control the speed of the LED animation
+            rclpy.spin(driver_service)
+    except (KeyboardInterrupt, ExternalShutdownException):
+        pass
 
-tbot = Trilobot()
 
-# Cycle R, G, B a set number of times
-while True:
-    tbot.fill_underlighting(RED)
-    time.sleep(INTERVAL)
-
-    tbot.fill_underlighting(GREEN)
-    time.sleep(INTERVAL)
-
-    tbot.fill_underlighting(BLUE)
-    time.sleep(INTERVAL)
-
-# Turn off underlighting
-tbot.clear_underlighting()
-
-print("Done")
+if __name__ == '__main__':
+    main()
