@@ -25,6 +25,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
+            'lights_client_async = lights.client:main',
         ],
     },
 )
