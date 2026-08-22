@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        architectures: ["linux/amd64", "linux/arm64/v8"]
+        architecture: ["linux/amd64", "linux/arm64/v8"]
 
     permissions:
       contents: read
@@ -56,7 +56,7 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          platforms: ${{ matrix.version }}
+          platforms: ${{ matrix.architecture }}
 
       - name: Generate artifact attestation
         uses: actions/attest@v4
