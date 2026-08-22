@@ -1,44 +1,34 @@
-def main() -> None:
-    print('Hi from trilobot_core.')
+import time
+
+from trilobot import Trilobot
+
+"""
+This example will demonstrate the RGB underlights of Trilobot,
+by making them flash in a red, green and blue sequence.
+"""
+print("Trilobot Example: Flash Underlights\n")
 
 
-if __name__ == '__main__':
-    main()
+RED = (255, 0, 0)
+GREEN = (0, 255, 0)
+BLUE = (0, 0, 255)
 
+INTERVAL = 0.3  # Control the speed of the LED animation
 
-# #!/usr/bin/env python3
+tbot = Trilobot()
 
-# import time
+# Cycle R, G, B a set number of times
+while True:
+    tbot.fill_underlighting(RED)
+    time.sleep(INTERVAL)
 
-# from trilobot import Trilobot
+    tbot.fill_underlighting(GREEN)
+    time.sleep(INTERVAL)
 
-# """
-# This example will demonstrate the RGB underlights of Trilobot,
-# by making them flash in a red, green and blue sequence.
-# """
-# print("Trilobot Example: Flash Underlights\n")
+    tbot.fill_underlighting(BLUE)
+    time.sleep(INTERVAL)
 
+# Turn off underlighting
+tbot.clear_underlighting()
 
-# RED = (255, 0, 0)
-# GREEN = (0, 255, 0)
-# BLUE = (0, 0, 255)
-
-# INTERVAL = 0.3  # Control the speed of the LED animation
-
-# tbot = Trilobot()
-
-# # Cycle R, G, B a set number of times
-# while True:
-#     tbot.fill_underlighting(RED)
-#     time.sleep(INTERVAL)
-
-#     tbot.fill_underlighting(GREEN)
-#     time.sleep(INTERVAL)
-
-#     tbot.fill_underlighting(BLUE)
-#     time.sleep(INTERVAL)
-
-# # Turn off underlighting
-# tbot.clear_underlighting()
-
-# print("Done")
+print("Done")

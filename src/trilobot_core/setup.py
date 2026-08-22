@@ -25,7 +25,8 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'driver_node = trilobot_core.driver_node:main'
+            'driver_node = trilobot_core.driver_node:main',
+            'hello_node = trilobot_core.hello_node:main'
         ],
     },
 )
