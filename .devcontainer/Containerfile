@@ -1,5 +1,11 @@
 # Use the official Python image matching the current Raspberry Pi OS (Bookworm)
-FROM ubuntu:26.04
+FROM ros:lyrical-ros-core
+
+# install ros package
+RUN apt-get update && apt-get install -y \
+    ros-${ROS_DISTRO}-demo-nodes-cpp \
+    ros-${ROS_DISTRO}-demo-nodes-py && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install system dependencies often needed for Pi development (GPIO, I2C, Build tools)
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -14,13 +20,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     sudo \
     software-properties-common
 
-RUN add-apt-repository universe --yes
+RUN echo "source /opt/ros/lyrical/setup.bash" >> /root/.bashrc
+RUN echo "source /etc/profile.d/colcon_cd.sh" >> /root/.bashrc
+RUN echo "export _colcon_cd_root=/opt/ros/lyrical/" >> /root/.bashrc
+RUN echo "source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash" >> /root/.bashrc
 
-ADD ros_setup.sh ros_setup.sh
-
-RUN ./ros_setup.sh
-
-RUN apt update
-RUN apt install ros-dev-tools --yes
-
-RUN apt install ros-lyrical-ros-base --yes
+RUN apt install python3-colcon-common-extensions python3-colcon-argcomplete python3-rosdep --yes
+RUN rosdep init
+RUN rosdep update

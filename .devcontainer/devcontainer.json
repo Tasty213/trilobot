@@ -12,5 +12,8 @@
             ]
         }
     },
-    "postCreateCommand": "source /opt/ros/lyrical/setup.bash && pip install -e trilobot-python"
+    "containerEnv": {
+        "MAKEFLAGS": "-j 2"
+    },
+    "postCreateCommand": ""
 }
