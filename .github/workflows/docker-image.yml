@@ -13,6 +13,9 @@ env:
 jobs:
   build-and-push-image:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        architectures: ["linux/amd64", "linux/arm64/v8"]
 
     permissions:
       contents: read
@@ -53,7 +56,7 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          platforms: linux/amd64,linux/arm64/v8
+          platforms: ${{ matrix.version }}
 
       - name: Generate artifact attestation
         uses: actions/attest@v4
