@@ -1,3 +1,6 @@
+import itertools
+import time
+
 import rclpy
 from rclpy.executors import ExternalShutdownException
 from rclpy.node import Node
@@ -5,37 +8,32 @@ from trilobot_interfaces.srv import SetUnderlight
 
 
 class LightsClientAsync(Node):
-
+    COLOURS = [(255, 0, 0), (0, 255, 0), (0, 0, 255)]
     def __init__(self):
         super().__init__('lights_client_async')
         self.logger = self.get_logger()
+        self.colour_cycle = itertools.cycle(self.COLOURS)
+        self.timer_period = 0.3
         self.cli = self.create_client(SetUnderlight, 'set_underlight')
         while not self.cli.wait_for_service(timeout_sec=1.0):
             self.get_logger().info('service not available, waiting again...')
-        self.req = SetUnderlight.Request()
+        self.timer = self.create_timer(self.timer_period, self.send_request)
+        self.request = SetUnderlight.Request()
         self.logger.info("Client ready")
 
-    def send_request(self, red: int, green: int, blue: int):
-        self.req.colour.red = red
-        self.req.colour.green = green
-        self.req.colour.blue = blue
-        self.logger.info("Prepared colour to send")
-        return self.cli.call_async(self.req)
-
-def send_colours(lights_client: LightsClientAsync):
-    for colour in [(255, 0, 0), (0, 255, 0), (0, 0, 255)]:
-        future = lights_client.send_request(colour[0], colour[1], colour[2])
-        rclpy.spin_until_future_complete(lights_client, future)
-        lights_client.logger.info(f"Sent colour ({colour})")
-
+    def send_request(self):
+        next_colour = next(self.colour_cycle)
+        self.request.colour.red = next_colour.red
+        self.request.colour.green = next_colour.green
+        self.request.colour.blue = next_colour.blue
+        self.logger.info(f"Prepared colour to send {self.request.colour}")
+        return self.cli.call_async(self.request)
 
 def main(args=None):
     try:
         with rclpy.init(args=args):
             lights_client = LightsClientAsync()
-            lights_client.logger.info("Begining loop")
-            while True:
-                send_colours(lights_client)
+            rclpy.spin(lights_client)
     except (KeyboardInterrupt, ExternalShutdownException):
         pass
 
