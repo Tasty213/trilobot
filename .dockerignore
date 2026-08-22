@@ -1,0 +1,12 @@
+.git
+.github
+.vscode
+.devcontainer
+log
+.gitignore
+.gitmodules
+*.md
+node_modules
+__pycache__
+*.pyc
+.DS_Store
