@@ -16,11 +16,11 @@ class DriverService(Node):
         self.srv = self.create_service(SetUnderlight, 'set_underlight', self.set_underlight_callback)
         self.logger.info(("Trilobot driver ready"))
 
-    def set_underlight_callback(self, request: SetUnderlight.Request, response: SetUnderlight.Response):
+    def set_underlight_callback(self, request: SetUnderlight.Request, response: SetUnderlight.Response) -> SetUnderlight.Response:
         self.logger.info("Recieved set colour request")
         colour = (request.colour.red, request.colour.green, request.colour.blue)
         self.tbot.fill_underlighting(colour)
-        response = True
+        response.success = True
         self.logger.info("Executed set colour request")
         return response
 
