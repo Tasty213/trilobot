@@ -1,5 +1,7 @@
 # Build stage
-FROM ros:lyrical-ros-core AS builder
+FROM --platform=$BUILDPLATFORM ros:lyrical-ros-core AS builder
+ARG TARGETOS
+ARG TARGETARCH
 
 # install ros package
 RUN apt-get update && apt-get install -y \
@@ -38,7 +40,9 @@ RUN pip wheel ./src/trilobot_core/resource/trilobot_python -w /workspace/wheels
 RUN colcon build --packages-select trilobot_core
 
 # Runtime stage
-FROM ros:lyrical-ros-core
+FROM --platform=$BUILDPLATFORM ros:lyrical-ros-core
+ARG TARGETOS
+ARG TARGETARCH
 
 # Install only runtime dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends pip \
