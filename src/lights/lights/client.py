@@ -23,9 +23,9 @@ class LightsClientAsync(Node):
 
     def send_request(self):
         next_colour = next(self.colour_cycle)
-        self.request.colour.red = next_colour.red
-        self.request.colour.green = next_colour.green
-        self.request.colour.blue = next_colour.blue
+        self.request.colour.red = next_colour[0]
+        self.request.colour.green = next_colour[1]
+        self.request.colour.blue = next_colour[2]
         self.logger.info(f"Prepared colour to send {self.request.colour}")
         return self.cli.call_async(self.request)
 
