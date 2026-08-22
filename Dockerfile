@@ -37,7 +37,7 @@ COPY . .
 # runtime stage without needing the full src/ tree copied over.
 RUN pip wheel ./src/trilobot_core/resource/trilobot_python -w /workspace/wheels
 
-RUN colcon build --packages-select trilobot_core
+RUN colcon build
 
 # Runtime stage
 FROM --platform=$BUILDPLATFORM ros:lyrical-ros-core
