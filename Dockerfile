@@ -25,19 +25,22 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     software-properties-common \
     swig
 
-RUN apt install python3-colcon-common-extensions python3-rosdep --yes
+RUN apt install python3-colcon-common-extensions python3-rosdep ros-lyrical-rosidl-default-generators --yes
 RUN rosdep init
 RUN rosdep update
 
 WORKDIR /workspace
 
-COPY . .
+COPY --exclude=src/examples . .
+
+# Clean any stale CMake caches from previous builds
+RUN rm -rf /workspace/build /workspace/install /workspace/log
 
 # Build the trilobot python dependency into a wheel so it can travel to the
 # runtime stage without needing the full src/ tree copied over.
 RUN pip wheel ./src/trilobot_core/resource/trilobot_python -w /workspace/wheels
 
-RUN colcon build
+RUN . /opt/ros/lyrical/setup.sh && colcon build
 
 # Runtime stage
 FROM --platform=$BUILDPLATFORM ros:lyrical-ros-core
