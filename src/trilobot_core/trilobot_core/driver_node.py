@@ -1,3 +1,5 @@
+from unittest.mock import MagicMock
+
 from trilobot_core.drivers.abstract_driver import StaticRobotService
 from trilobot_interfaces.srv import SetUnderlight
 from trilobot import Trilobot
@@ -6,11 +8,10 @@ import rclpy
 from rclpy.executors import ExternalShutdownException
 from rclpy.node import Node
 import trilobot_core.drivers.motors as Motors
+import inspect
 
 
 class DriverService(Node):
-    motor_drivers = Motors.__dict__
-
     def __init__(self):
         super().__init__("driver_service")
         self.logger = self.get_logger()
@@ -21,9 +22,16 @@ class DriverService(Node):
         )
 
         self.motor_services = {}
-        for driver_name, driver in self.motor_drivers.items():
+        for driver_name, driver in inspect.getmembers(Motors, inspect.isclass):
+            if driver.__module__ != Motors.__name__:
+                break
+            if driver is StaticRobotService:
+                break
             if not issubclass(driver, StaticRobotService):
-                raise ValueError("")
+                raise ValueError(f"{driver} is not a subclass of {StaticRobotService}")
+            self.logger.info(
+                f"Creating service of type {driver.service_type()} with name {driver.service_name()} executed by {driver.execute}"
+            )
             new_service = self.create_service(
                 driver.service_type(), driver.service_name(), driver.execute  # type: ignore
             )
