@@ -15,10 +15,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-dev \
     pip \
     libgpiod-dev \
+    liblgpio-dev \
+    python3-lgpio \
     i2c-tools \
     ssh \
     sudo \
-    software-properties-common
+    software-properties-common \
+    swig
 
 RUN echo "source /opt/ros/lyrical/setup.bash" >> /root/.bashrc
 RUN echo "source /etc/profile.d/colcon_cd.sh" >> /root/.bashrc
