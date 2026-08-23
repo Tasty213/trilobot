@@ -9,7 +9,13 @@ find_package(rosidl_default_generators REQUIRED)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/Colour.msg"
+  "msg/Motor.msg"
+  "msg/Speed.msg"
+  "srv/Coast.srv"
+  "srv/MotorSpeed.srv"
   "srv/SetUnderlight.srv"
+  "srv/SingleSpeed.srv"
+  "srv/TwinSpeed.srv"
 )
 
 if(BUILD_TESTING)
