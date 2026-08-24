@@ -1,3 +1,4 @@
+import trilobot_core.drivers.buttons as Buttons
 import trilobot_core.drivers.lights as Lights
 import trilobot_core.drivers.motors as Motors
 from rclpy.node import Node
@@ -30,6 +31,26 @@ class DriverService(Node):
                 driver.service_type(), driver.service_name(), driver.execute  # type: ignore
             )
             self.motor_services[driver_name] = new_service
+
+        self.button_services = {}
+        for driver_name, driver in inspect.getmembers(Buttons, inspect.isclass):
+            if driver.__module__ != Buttons.__name__:
+                continue
+            if driver is StaticRobotService:
+                continue
+            if not issubclass(driver, StaticRobotService):
+                raise ValueError(f"{driver} is not a subclass of {StaticRobotService}")
+            self.logger.info(
+                f"Creating service of type {driver.service_type()} with name {driver.service_name()} executed by {driver.execute}"
+            )
+            new_service = self.create_service(
+                driver.service_type(),
+                driver.service_name(),
+                lambda request, response, execute=driver.execute: execute(
+                    request, response, self.tbot
+                ),
+            )
+            self.button_services[driver_name] = new_service
 
         self.light_services = {}
         for driver_name, driver in inspect.getmembers(Lights, inspect.isclass):
