@@ -1,5 +1,5 @@
 UnderLight light
-Colour colour
+ColourHex colour
 bool show
 ---
 bool success

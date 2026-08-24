@@ -1,0 +1,4 @@
+ColourHsv colour
+bool show
+---
+bool success

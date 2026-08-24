@@ -1,5 +1,4 @@
 UnderLight light
-Colour colour
 bool show
 ---
 bool success

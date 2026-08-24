@@ -1,0 +1,5 @@
+uint32 timeout
+uint8 samples
+uint32 offset
+---
+float32 distance

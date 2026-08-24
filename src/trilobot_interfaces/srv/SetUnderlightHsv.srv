@@ -1,5 +1,5 @@
 UnderLight light
-Colour colour
+ColourHsv colour
 bool show
 ---
 bool success

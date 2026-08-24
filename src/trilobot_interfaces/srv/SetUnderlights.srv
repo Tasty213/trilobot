@@ -1,4 +1,4 @@
-UnderLight light
+UnderLight[6] lights
 Colour colour
 bool show
 ---

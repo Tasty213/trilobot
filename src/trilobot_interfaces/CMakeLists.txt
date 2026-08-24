@@ -9,13 +9,31 @@ find_package(rosidl_default_generators REQUIRED)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/Colour.msg"
+  "msg/ColourHex.msg"
+  "msg/ColourHsv.msg"
   "msg/Motor.msg"
   "msg/Speed.msg"
+  "msg/UnderLight.msg"
   "srv/Coast.srv"
+  "srv/ClearUnderlight.srv"
+  "srv/DisableUnderlighting.srv"
+  "srv/FillUnderlighting.srv"
+  "srv/FillUnderlightingHex.srv"
+  "srv/FillUnderlightingHsv.srv"
   "srv/MotorSpeed.srv"
   "srv/SetUnderlight.srv"
+  "srv/SetUnderlightHex.srv"
+  "srv/SetUnderlightHsv.srv"
+  "srv/SetUnderlights.srv"
+  "srv/SetUnderlightsHex.srv"
+  "srv/SetUnderlightsHsv.srv"
+  "srv/ShowUnderlighting.srv"
   "srv/SingleSpeed.srv"
   "srv/TwinSpeed.srv"
+  "srv/GetButtonsState.srv"
+  "srv/ReadDistance.srv"
+  "srv/SetButtonLed.srv"
+  "srv/SetButtonLedBrightness.srv"
 )
 
 if(BUILD_TESTING)
