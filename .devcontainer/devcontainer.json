@@ -14,7 +14,7 @@
         }
     },
     "containerEnv": {
-        "MAKEFLAGS": "-j 2"
+        "RPI_LGPIO_REVISION": "0x00d04170"
     },
     "postCreateCommand": ""
 }
