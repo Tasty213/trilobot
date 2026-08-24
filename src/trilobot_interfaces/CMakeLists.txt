@@ -16,6 +16,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/UnderLight.msg"
   "srv/Coast.srv"
   "srv/ClearUnderlight.srv"
+  "srv/ClearUnderlighting.srv"
   "srv/DisableUnderlighting.srv"
   "srv/FillUnderlighting.srv"
   "srv/FillUnderlightingHex.srv"
