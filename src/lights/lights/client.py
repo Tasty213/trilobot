@@ -9,21 +9,26 @@ from trilobot_interfaces.srv import SetUnderlight
 
 class LightsClientAsync(Node):
     COLOURS = [(255, 0, 0), (0, 255, 0), (0, 0, 255)]
+    LIGHTS = [0, 1, 2, 3, 4, 5, 6]
 
     def __init__(self):
         super().__init__("lights_client_async")
         self.logger = self.get_logger()
         self.colour_cycle = itertools.cycle(self.COLOURS)
+        self.light_cycle = itertools.cycle(self.LIGHTS)
         self.timer_period = 0.3
         self.cli = self.create_client(SetUnderlight, "set_underlight")
         while not self.cli.wait_for_service(timeout_sec=1.0):
             self.get_logger().info("service not available, waiting again...")
         self.timer = self.create_timer(self.timer_period, self.send_request)
-        self.request = SetUnderlight.Request()
         self.logger.info("Client ready")
 
     def send_request(self):
+        self.request = SetUnderlight.Request()
         next_colour = next(self.colour_cycle)
+        next_light = next(self.light_cycle)
+        self.request.show = True
+        self.request.light.index = next_light
         self.request.colour.red = next_colour[0]
         self.request.colour.green = next_colour[1]
         self.request.colour.blue = next_colour[2]
