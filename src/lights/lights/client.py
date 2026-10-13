@@ -9,7 +9,7 @@ from trilobot_interfaces.srv import SetUnderlight
 
 class LightsClientAsync(Node):
     COLOURS = [(255, 0, 0), (0, 255, 0), (0, 0, 255)]
-    LIGHTS = [0, 1, 2, 3, 4, 5, 6]
+    LIGHTS = [0, 1, 2, 3, 4, 5]
 
     def __init__(self):
         super().__init__("lights_client_async")
